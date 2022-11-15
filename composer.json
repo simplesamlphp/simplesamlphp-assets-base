@@ -1,0 +1,21 @@
+{
+    "name": "simplesamlphp/simplesamlphp-assets",
+    "description": "Assets for the SimpleSAMLphp main repository",
+    "type": "simplesamlphp-module",
+    "license": "LGPL-2.1-or-later",
+    "authors": [
+        {
+            "name": "Tim van Dijen",
+            "email": "tvdijen@gmail.com"
+        }
+    ],
+    "require": {}
+    "archive": {
+        "exclude": [
+            ".gitattributes",
+            ".gitignore",
+            "public/main/.gitkeep",
+            "resources"
+        ]
+    }
+}
