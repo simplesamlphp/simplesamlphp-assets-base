@@ -14,7 +14,7 @@
         "exclude": [
             ".gitattributes",
             ".gitignore",
-            "public/main/.gitkeep",
+            "public/base/.gitkeep",
             "resources"
         ]
     }
