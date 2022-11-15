@@ -6,7 +6,6 @@ on:
     paths:
       - 'resources/**'
   schedule:
-    branches: [ release-2.0 ]
     # Run every week on Sunday at 00:00 AM UTC
     - cron:  '0 0 * * 0'
 
@@ -26,6 +25,8 @@ jobs:
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
 
       - uses: actions/checkout@v3
+        with:
+          ref: release-2.0
 
       - name: Get composer cache directory
         id: composer-cache
@@ -58,27 +59,29 @@ jobs:
     name: Build assets
     needs: quality
     runs-on: [ubuntu-latest]
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
 
     steps:
-      - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - run: |
-        npm clean-install
-        npm audit fix
-        npx browserslist@latest --update-db
-        npm run build
+      - uses: actions/checkout@v3
+        with:
+          ref: release-2.0
+
+      - name: Install & build assets
+        run: |
+          npm clean-install
+          npm audit fix
+          npx browserslist@latest --update-db
+          npm run build
 
       # This step will evaluate the repo status and report the change
       - name: Check if there are changes
         id: changes
         uses: UnicornGlobal/has-changes-action@v1.0.12
-
-      - outputs:
-        changed: ${{ steps.changes.outputs.changed }}
 
   commit:
     name: Commit changes
