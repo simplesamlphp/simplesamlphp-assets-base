@@ -1,0 +1,90 @@
+name: Build assets for SimpleSAMLphp 2.0
+
+on:
+  push:
+    branches: [ release-2.0 ]
+    paths:
+      - 'resources/**'
+  schedule:
+    branches: [ release-2.0 ]
+    # Run every week on Sunday at 00:00 AM UTC
+    - cron:  '0 0 * * 0'
+
+jobs:
+  quality:
+    name: Quality checks
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
+        with:
+          php-version: 8.1
+          tools: composer:v2
+
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      - uses: actions/checkout@v3
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Syntax check YAML / XML / JSON
+        run: |
+          bash vendor/bin/check-syntax-yaml.sh
+          bash vendor/bin/check-syntax-xml.sh
+          bash vendor/bin/check-syntax-json.sh
+
+      - name: Code Sniffer
+        continue-on-error: false
+        run: php vendor/bin/phpcs
+
+  build:
+    name: Build assets
+    needs: quality
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - run: |
+        npm clean-install
+        npm audit fix
+        npx browserslist@latest --update-db
+        npm run build
+
+      # This step will evaluate the repo status and report the change
+      - name: Check if there are changes
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.12
+
+      - outputs:
+        changed: ${{ steps.changes.outputs.changed }}
+
+  commit:
+    name: Commit changes
+    needs: build
+    runs-on: [ubuntu-latest]
+    if: ${{ needs.build.outputs.changed }}
+
+    steps:
+      - run: echo "Commit!"
