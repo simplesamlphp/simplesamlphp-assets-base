@@ -96,7 +96,7 @@ jobs:
           # Required to determine the next version in the next step
           fetch-depth: 0
 
-      - uses: paulhatch/semantic-version@v4.0.2
+      - uses: paulhatch/semantic-version@v5.0.0-beta
         id: asset_version
         with:
           # The prefix to use to identify tags
