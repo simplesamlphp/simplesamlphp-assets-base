@@ -1,5 +1,5 @@
 {
-  "name": "simplesamlphp/simplesamlphp-assets",
+  "name": "simplesamlphp-assets",
   "main": "index.js",
   "repository": "https://github.com/simplesamlphp/simplesamlphp",
   "author": "tvdijen",
