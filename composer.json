@@ -16,7 +16,8 @@
             "package.json",
             "package-lock.json",
             "public/base/.gitkeep",
-            "resources"
+            "resources",
+            "tools"
         ]
     }
 }

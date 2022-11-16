@@ -3,3 +3,4 @@ package.json export-ignore
 package-lock.json export-ignore
 /public/base/.gitkeep export-ignore
 /resources export-ignore
+/tools export-ignore
