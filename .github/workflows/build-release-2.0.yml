@@ -57,7 +57,7 @@
            DEFAULT_BRANCH: release-2.0
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            # CSS Linter will choke on generated assets
-           FILTER_REGEX_EXCLUDE: '(public/.*|!tools/linters/.stylelintrc.json)'
+           FILTER_REGEX_EXCLUDE: 'public/.*'
 
    build:
      name: Build assets
