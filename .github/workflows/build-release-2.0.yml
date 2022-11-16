@@ -112,7 +112,7 @@ jobs:
           minor_pattern: "(MINOR)"
 
           # A string to determine the format of the version output
-          format: "${major}.${minor}.${patch}"
+          version_format: "${major}.${minor}.${patch}"
 
           # Optional path to check for changes. If any changes are detected in the path the
           # 'changed' output will true. Enter multiple paths separated by spaces.
@@ -126,10 +126,7 @@ jobs:
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
-          add:
-          - 'resources/*'
-          - 'package.json'
-          - 'package-lock.json'
+          add: "['resources/*', 'package.json', 'package-lock.json']"
 
           # Determines the way the action fills missing author name and email. Three options are available:
           # - github_actor -> UserName <UserName@users.noreply.github.com>
