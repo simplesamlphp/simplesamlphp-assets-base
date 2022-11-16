@@ -1,152 +1,153 @@
 ---
- name: Build assets for SimpleSAMLphp 2.0
+name: Build assets for SimpleSAMLphp 2.0
 
- on:
-   push:
-     branches: ['release-2.0']
-     paths:
-       - 'resources/**'
-       - 'package.json'
-       - 'package-lock.json'
-   schedule:
-     # Run every week on Sunday at 00:00 AM UTC
-     - cron: '0 0 * * 0'
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: ['release-2.0']
+    paths:
+      - 'resources/**'
+      - 'package.json'
+      - 'package-lock.json'
+  schedule:
+    # Run every week on Sunday at 00:00 AM UTC
+    - cron: '0 0 * * 0'
 
- jobs:
-   quality:
-     name: Quality checks
-     runs-on: ['ubuntu-latest']
+jobs:
+  quality:
+    name: Quality checks
+    runs-on: ['ubuntu-latest']
 
-     steps:
-       - uses: actions/checkout@v3
-         with:
-           ref: release-2.0
-           # Full git history is needed to get a proper
-           # list of changed files within `super-linter`
-           fetch-depth: 0
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: release-2.0
+          # Full git history is needed to get a proper
+          # list of changed files within `super-linter`
+          fetch-depth: 0
 
-       - uses: actions/setup-node@v3
-         with:
-           node-version: 18
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-       - name: Install & build assets
-         run: |
-           npm clean-install
-           npm audit fix
+      - name: Install & build assets
+        run: |
+          npm clean-install
+          npm audit fix
 
-       ################################
-       # Run Linter against code base #
-       ################################
-       - name: Lint Code Base
-         uses: github/super-linter/slim@v4
-         env:
-           VALIDATE_ALL_CODEBASE: true
-           LINTER_RULES_PATH: 'tools/linters'
-           VALIDATE_CSS: true
-           VALIDATE_JAVASCRIPT_ES: true
-           VALIDATE_JSON: true
-           VALIDATE_MARKDOWN: true
-           VALIDATE_YAML: true
-           VALIDATE_GITHUB_ACTIONS: true
-           DEFAULT_BRANCH: release-2.0
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           # CSS Linter will choke on generated assets
-           FILTER_REGEX_EXCLUDE: 'public/.*'
+      ################################
+      # Run Linter against code base #
+      ################################
+      - name: Lint Code Base
+        uses: github/super-linter/slim@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          LINTER_RULES_PATH: 'tools/linters'
+          VALIDATE_CSS: true
+          VALIDATE_JAVASCRIPT_ES: true
+          VALIDATE_JSON: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_YAML: true
+          VALIDATE_GITHUB_ACTIONS: true
+          DEFAULT_BRANCH: release-2.0
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # CSS Linter will choke on generated assets
+          FILTER_REGEX_EXCLUDE: 'public/.*'
 
-   build:
-     name: Build assets
-     needs: quality
-     runs-on: [ubuntu-latest]
-     outputs:
-       changed: ${{ steps.changes.outputs.changed }}
+  build:
+    name: Build assets
+    needs: quality
+    runs-on: [ubuntu-latest]
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
 
-     steps:
-       - uses: actions/setup-node@v3
-         with:
-           node-version: 18
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-       - uses: actions/checkout@v3
-         with:
-           ref: release-2.0
+      - uses: actions/checkout@v3
+        with:
+          ref: release-2.0
 
-       - name: Install & build assets
-         run: |
-           npm clean-install
-           npm audit fix
-           npx browserslist@latest --update-db
-           npm run build
+      - name: Install & build assets
+        run: |
+          npm clean-install
+          npm audit fix
+          npx browserslist@latest --update-db
+          npm run build
 
-       # This step will evaluate the repo status and report the change
-       - name: Check if there are changes
-         id: changes
-         uses: UnicornGlobal/has-changes-action@v1.0.12
+      # This step will evaluate the repo status and report the change
+      - name: Check if there are changes
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.12
 
-   commit:
-     name: Commit changes
-     needs: build
-     runs-on: [ubuntu-latest]
-     if: ${{ needs.build.outputs.changed }}
+  commit:
+    name: Commit changes
+    needs: build
+    runs-on: [ubuntu-latest]
+    if: ${{ needs.build.outputs.changed }}
 
-     steps:
-       - uses: actions/checkout@v3
-         with:
-           ref: release-2.0
-           # Required to determine the next version in the next step
-           fetch-depth: 0
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: release-2.0
+          # Required to determine the next version in the next step
+          fetch-depth: 0
 
-       - uses: paulhatch/semantic-version@v5.0.0-beta
-         id: asset_version
-         with:
-           # The prefix to use to identify tags
-           tag_prefix: "v"
+      - uses: paulhatch/semantic-version@v5.0.0-beta
+        id: asset_version
+        with:
+          # The prefix to use to identify tags
+          tag_prefix: "v"
 
-           # A string which, if present in a git commit, indicates that a change represents a
-           # major (breaking) change, supports regular expressions wrapped with '/'
-           major_pattern: "(MAJOR)"
+          # A string which, if present in a git commit, indicates that a change represents a
+          # major (breaking) change, supports regular expressions wrapped with '/'
+          major_pattern: "(MAJOR)"
 
-           # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
-           minor_pattern: "(MINOR)"
+          # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
+          minor_pattern: "(MINOR)"
 
-           # A string to determine the format of the version output
-           version_format: "${major}.${minor}.${patch}"
+          # A string to determine the format of the version output
+          version_format: "${major}.${minor}.${patch}"
 
-           # Optional path to check for changes. If any changes are detected in the path the
-           # 'changed' output will true. Enter multiple paths separated by spaces.
-           change_path: "resources/** public/base/** package.json package-lock.json"
+          # Optional path to check for changes. If any changes are detected in the path the
+          # 'changed' output will true. Enter multiple paths separated by spaces.
+          change_path: "resources/** public/base/** package.json package-lock.json"
 
-           # If this is set to true, *every* commit will be treated as a new version.
-           bump_each_commit: false
+          # If this is set to true, *every* commit will be treated as a new version.
+          bump_each_commit: false
 
-       - name: Add & Commit
-         uses: EndBug/add-and-commit@v9.1.1
-         with:
-           # The arguments for the `git add` command (see the paragraph below for more info)
-           # Default: '.'
-           add: "['resources/*', 'public/*', 'package.json', 'package-lock.json']"
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v9.1.1
+        with:
+          # The arguments for the `git add` command (see the paragraph below for more info)
+          # Default: '.'
+          add: "['resources/*', 'public/*', 'package.json', 'package-lock.json']"
 
-           # Determines the way the action fills missing author name and email. Three options are available:
-           # - github_actor -> UserName <UserName@users.noreply.github.com>
-           # - user_info -> Your Display Name <your-actual@email.com>
-           # - github_actions -> github-actions <email associated with the github logo>
-           # Default: github_actor
-           default_author: github_actions
+          # Determines the way the action fills missing author name and email. Three options are available:
+          # - github_actor -> UserName <UserName@users.noreply.github.com>
+          # - user_info -> Your Display Name <your-actual@email.com>
+          # - github_actions -> github-actions <email associated with the github logo>
+          # Default: github_actor
+          default_author: github_actions
 
-           # Arguments for the git fetch command. If set to false, the action won't fetch the repo.
-           # For more info as to why fetching is usually recommended, please see the "Performance on large repos" FAQ. 
-           # Default: --tags --force
-           fetch: false
+          # Arguments for the git fetch command. If set to false, the action won't fetch the repo.
+          # For more info as to why fetching is usually recommended, please see the "Performance on large repos" FAQ.
+          # Default: --tags --force
+          fetch: false
 
-           # The message for the commit.
-           # Default: 'Commit from GitHub Actions (name of the workflow)'
-           message: 'Auto-rebuild assets'
+          # The message for the commit.
+          # Default: 'Commit from GitHub Actions (name of the workflow)'
+          message: 'Auto-rebuild assets'
 
-           # The way the action should handle pathspec errors from the add and remove commands. Three options are available:
-           # - ignore -> errors will be logged but the step won't fail
-           # - exitImmediately -> the action will stop right away, and the step will fail
-           # - exitAtEnd -> the action will go on, every pathspec error will be logged at the end, the step will fail.
-           # Default: ignore
-           pathspec_error_handling: exitImmediately
+          # The way the action should handle pathspec errors from the add and remove commands.
+          # Three options are available:
+          # - ignore -> errors will be logged but the step won't fail
+          # - exitImmediately -> the action will stop right away, and the step will fail
+          # - exitAtEnd -> the action will go on, every pathspec error will be logged at the end, the step will fail.
+          # Default: ignore
+          pathspec_error_handling: exitImmediately
 
-           # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
-           # Default: ''
-           tag: "v${{ steps.asset_version.outputs.version }}"
+          # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
+          # Default: ''
+          tag: "v${{ steps.asset_version.outputs.version }}"
