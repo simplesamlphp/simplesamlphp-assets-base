@@ -9,9 +9,6 @@
             "email": "tvdijen@gmail.com"
         }
     ],
-    "require-dev": {
-        "simplesamlphp/simplesamlphp-test-framework": "^1.3.1"
-    },
     "archive": {
         "exclude": [
             ".gitattributes",
