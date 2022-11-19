@@ -43,12 +43,13 @@ jobs:
         id: changes
         uses: tj-actions/changed-files@v34
         with:
-          files: public/**
+          files: |
+            public/**
 
       - name: Run step if any file(s) in the public folder changed
         if: steps.changes.outputs.any_changed == 'true'
         run: |
-          echo "One or more files in the docs folder has changed."
+          echo "List all the files that have changed: ${{ steps.changes.outputs.all_changed_files }}"
 
       - name: Zip artifact for deployment
         if: steps.changes.outputs.any_changed == 'true'
