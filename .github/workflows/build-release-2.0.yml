@@ -59,9 +59,15 @@ jobs:
     if: ${{ needs.quality.outputs.changed }}
 
     steps:
-      ################################
-      # Run Linter against code base #
-      ################################
+      - uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: unzip artifact for deployment
+        run: |
+          unzip release.zip
+          rm release.zip
+
       - name: Lint Code Base
         uses: github/super-linter/slim@v4
         env:
@@ -87,6 +93,15 @@ jobs:
       version: ${{ steps.asset_version.outputs.version }}
 
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: unzip artifact for deployment
+        run: |
+          unzip release.zip
+          rm release.zip
+
       - uses: paulhatch/semantic-version@v5.0.0-beta
         id: asset_version
         with:
