@@ -40,7 +40,7 @@ jobs:
           npm run build
 
       - name: Suppress fatal error in the next step
-        run: git config --global --add safe.directory "${{ github.workspace }}"
+        run: git config --global --add safe.directory /github/workspace
 
       # This step will evaluate the repo status and report the change
       - name: Check if there are changes
