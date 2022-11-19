@@ -68,7 +68,7 @@ jobs:
 
     steps:
       - name: debug outputs
-        echo "${{ needs.build.outputs.changed }}"
+        run: echo "${{ needs.build.outputs.changed }}"
 
       - uses: actions/download-artifact@v3
         with:
