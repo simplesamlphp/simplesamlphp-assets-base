@@ -22,7 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          persist-credentials: false
           token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
           ref: release-2.0
           # Full git history is needed to get a proper
@@ -175,5 +174,3 @@ jobs:
           # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
           # Default: ''
           tag: "v${{ needs.version.outputs.version }}"
-
-          push: true
