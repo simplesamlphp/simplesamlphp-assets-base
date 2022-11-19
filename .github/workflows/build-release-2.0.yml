@@ -97,7 +97,7 @@ jobs:
     name: Commit changes
     needs: quality
     runs-on: [ubuntu-latest]
-    if: ${{ needs.build.outputs.changed }}
+    if: ${{ needs.quality.outputs.changed }}
 
     steps:
       - uses: actions/download-artifact@v3
