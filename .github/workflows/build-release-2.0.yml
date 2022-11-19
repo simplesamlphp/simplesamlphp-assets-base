@@ -17,7 +17,7 @@ jobs:
     name: Build assets
     runs-on: ['ubuntu-latest']
     outputs:
-      changed: ${{ steps.changes.outputs.any_changed }}
+      changed: ${{ steps.changes.outputs.any_modified }}
 
     steps:
       - uses: actions/checkout@v3
@@ -47,16 +47,16 @@ jobs:
             public/**
 
       - name: Run step if any file(s) in the public folder changed
-        if: steps.changes.outputs.any_changed == 'true'
+        if: steps.changes.outputs.any_modified == 'true'
         run: |
-          echo "List all the files that have changed: ${{ steps.changes.outputs.all_changed_files }}"
+          echo "List all the files that have been modified: ${{ steps.changes.outputs.all_modified_files }}"
 
       - name: Zip artifact for deployment
-        if: steps.changes.outputs.any_changed == 'true'
+        if: steps.changes.outputs.any_modified == 'true'
         run: zip release.zip -r .
 
       - uses: actions/upload-artifact@v3
-        if: steps.changes.outputs.any_changed == 'true'
+        if: steps.changes.outputs.any_modified == 'true'
         with:
           name: build
           path: release.zip
