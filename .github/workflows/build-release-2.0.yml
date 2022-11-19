@@ -45,6 +45,8 @@ jobs:
       - name: Commit changes to see if anything changed
         run: |
           git add --all
+          git config user.email "someone@example.com"
+          git config user.name "Github Action"
           git commit -m "Temporary commit" --allow-empty
 
       - name: Get changed files in the public folder
