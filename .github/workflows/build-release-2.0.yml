@@ -38,10 +38,13 @@ jobs:
           npx browserslist@latest --update-db
           npm run build
 
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+
       - uses: actions/upload-artifact@v3
         with:
           name: build
-          path: ${{ github.workspace }}
+          path: release.zip
 
       ################################
       # Run Linter against code base #
@@ -101,11 +104,10 @@ jobs:
         with:
           name: build
 
-#      - uses: actions/checkout@v3
-#        with:
-#          ref: release-2.0
-          # Required to determine the next version in the next step
-#          fetch-depth: 0
+      - name: unzip artifact for deployment
+        run: |
+          unzip release.zip
+          rm release.zip
 
       - name: Add & Commit
         uses: EndBug/add-and-commit@v9.1.1
