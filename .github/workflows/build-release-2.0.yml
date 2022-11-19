@@ -18,6 +18,7 @@ jobs:
     runs-on: ['ubuntu-latest']
     outputs:
       changed: ${{ steps.changes.outputs.changed }}
+      version: ${{ steps.asset_version.outputs.version }}
 
     steps:
       - uses: actions/checkout@v3
@@ -142,4 +143,4 @@ jobs:
 
           # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
           # Default: ''
-          tag: "v${{ steps.asset_version.outputs.version }}"
+          tag: "v${{ needs.quality.outputs.version }}"
