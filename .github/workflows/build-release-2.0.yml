@@ -39,6 +39,10 @@ jobs:
           npx browserslist@latest --update-db
           npm run build
 
+      - name: Suppress fatal error in next step
+        run: |
+          git config --global safe.directory '*'
+
       - name: Check for uncommitted changes
         id: changes
         uses: mskri/check-uncommitted-changes-action@v1.0.1
