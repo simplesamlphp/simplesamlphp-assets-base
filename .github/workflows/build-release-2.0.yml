@@ -39,26 +39,23 @@ jobs:
           npx browserslist@latest --update-db
           npm run build
 
-#      - name: Suppress fatal error in the next step
-#        run: |
-#          sudo git config --global --add safe.directory "${{ github.workspace }}"
-#          sudo chown -R "$USER:$USER" "${{ github.workspace }}"
-
-      # This step will evaluate the repo status and report the change
-#      - name: Check if there are changes
-#        id: changes
-#        uses: UnicornGlobal/has-changes-action@v1.0.12
-
       - name: Get changed files in the public folder
         id: changes
         uses: tj-actions/changed-files@v34
         with:
           files: public/**
 
+      - name: Run step if any file(s) in the public folder changed
+        if: steps.changes.outputs.any_changed == 'true'
+        run: |
+          echo "One or more files in the docs folder has changed."
+
       - name: Zip artifact for deployment
+        if: steps.changes.outputs.any_changed == 'true'
         run: zip release.zip -r .
 
       - uses: actions/upload-artifact@v3
+        if: steps.changes.outputs.any_changed == 'true'
         with:
           name: build
           path: release.zip
@@ -67,7 +64,7 @@ jobs:
     name: Quality checks
     runs-on: ['ubuntu-latest']
     needs: build
-    if: ${{ needs.build.outputs.changed }}
+    if: ${{ needs.build.outputs.changed }} == 'true'
 
     steps:
       - uses: actions/download-artifact@v3
