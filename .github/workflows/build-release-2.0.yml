@@ -41,7 +41,7 @@ jobs:
 
       - name: Suppress fatal error in next step
         run: |
-          echo "GIT_TEST_DEBUG_UNSAFE_DIRECTORIES=true" >> $GITHUB_ENV
+          export GIT_TEST_DEBUG_UNSAFE_DIRECTORIES=true
 
       - name: Check for uncommitted changes
         id: changes
