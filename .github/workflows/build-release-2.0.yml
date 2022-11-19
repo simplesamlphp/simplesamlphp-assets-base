@@ -56,7 +56,7 @@ jobs:
     name: Quality checks
     runs-on: ['ubuntu-latest']
     needs: build
-    if: ${{ needs.quality.outputs.changed }}
+    if: ${{ needs.build.outputs.changed }}
 
     steps:
       - uses: actions/download-artifact@v3
