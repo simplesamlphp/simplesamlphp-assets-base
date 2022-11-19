@@ -21,7 +21,7 @@ jobs:
       version: ${{ steps.asset_version.outputs.version }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           ref: release-2.0
           # Full git history is needed to get a proper
@@ -115,7 +115,7 @@ jobs:
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
-          #add: "['resources/*', 'public/*', 'package.json', 'package-lock.json']"
+          add: "['resources/*', 'public/*', 'package.json', 'package-lock.json']"
 
           # Determines the way the action fills missing author name and email. Three options are available:
           # - github_actor -> UserName <UserName@users.noreply.github.com>
