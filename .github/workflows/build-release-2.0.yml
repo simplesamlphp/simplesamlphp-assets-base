@@ -144,3 +144,8 @@ jobs:
           # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
           # Default: ''
           tag: "v${{ needs.quality.outputs.version }}"
+
+          push: false
+
+      - name: Push
+        run: git push
