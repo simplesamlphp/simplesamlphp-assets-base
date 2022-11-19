@@ -64,12 +64,9 @@ jobs:
     name: Quality checks
     runs-on: ['ubuntu-latest']
     needs: build
-    if: ${{ needs.build.outputs.changed }} == 'true'
+    if: needs.build.outputs.changed == 'true'
 
     steps:
-      - name: debug outputs
-        run: echo "${{ needs.build.outputs.changed }}"
-
       - uses: actions/download-artifact@v3
         with:
           name: build
