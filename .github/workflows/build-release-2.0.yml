@@ -16,6 +16,8 @@ jobs:
   quality:
     name: Quality checks
     runs-on: ['ubuntu-latest']
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
 
     steps:
       - uses: actions/checkout@v3
@@ -33,6 +35,13 @@ jobs:
         run: |
           npm clean-install
           npm audit fix
+          npx browserslist@latest --update-db
+          npm run build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: ${{ github.workspace }}
 
       ################################
       # Run Linter against code base #
@@ -52,47 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # CSS Linter will choke on generated assets
           FILTER_REGEX_EXCLUDE: 'public/.*'
-
-  build:
-    name: Build assets
-    needs: quality
-    runs-on: [ubuntu-latest]
-    outputs:
-      changed: ${{ steps.changes.outputs.changed }}
-
-    steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - uses: actions/checkout@v3
-        with:
-          ref: release-2.0
-
-      - name: Install & build assets
-        run: |
-          npm clean-install
-          npm audit fix
-          npx browserslist@latest --update-db
-          npm run build
-
-      # This step will evaluate the repo status and report the change
-      - name: Check if there are changes
-        id: changes
-        uses: UnicornGlobal/has-changes-action@v1.0.12
-
-  commit:
-    name: Commit changes
-    needs: build
-    runs-on: [ubuntu-latest]
-    if: ${{ needs.build.outputs.changed }}
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: release-2.0
-          # Required to determine the next version in the next step
-          fetch-depth: 0
 
       - uses: paulhatch/semantic-version@v5.0.0-beta
         id: asset_version
@@ -116,6 +84,28 @@ jobs:
 
           # If this is set to true, *every* commit will be treated as a new version.
           bump_each_commit: false
+
+      # This step will evaluate the repo status and report the change
+      - name: Check if there are changes
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.12
+
+  commit:
+    name: Commit changes
+    needs: quality
+    runs-on: [ubuntu-latest]
+    if: ${{ needs.build.outputs.changed }}
+
+    steps:
+        - uses: actions/download-artifact@v3
+          with:
+            name: build
+
+#      - uses: actions/checkout@v3
+#        with:
+#          ref: release-2.0
+          # Required to determine the next version in the next step
+#          fetch-depth: 0
 
       - name: Add & Commit
         uses: EndBug/add-and-commit@v9.1.1
