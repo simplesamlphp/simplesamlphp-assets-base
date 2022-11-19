@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          persist-credentials: false
           ref: release-2.0
           # Full git history is needed to get a proper
           # list of changed files within `super-linter`
