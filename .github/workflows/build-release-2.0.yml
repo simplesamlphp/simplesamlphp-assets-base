@@ -41,7 +41,7 @@ jobs:
 
       - name: Suppress fatal error in next step
         run: |
-          export GIT_TEST_DEBUG_UNSAFE_DIRECTORIES=true
+          sudo git config --system --add safe.directory '*'
 
       - name: Check for uncommitted changes
         id: changes
