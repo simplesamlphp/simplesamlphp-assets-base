@@ -20,6 +20,10 @@ jobs:
       changed: ${{ steps.changes.outputs.changes }}
 
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
@@ -27,10 +31,6 @@ jobs:
           # Full git history is needed to get a proper
           # list of changed files within `super-linter`
           fetch-depth: 0
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
 
       - name: Install & build assets
         run: |
