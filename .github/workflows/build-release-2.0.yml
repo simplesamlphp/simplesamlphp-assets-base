@@ -17,7 +17,7 @@ jobs:
     name: Build assets
     runs-on: ['ubuntu-latest']
     outputs:
-      all_changed_and_modified_files: ${{ steps.changes.outputs.all_changed_and_modified_files }}
+      files_changed: ${{ steps.changes.outputs.files_changed }}
 
     steps:
       - uses: actions/setup-node@v3
@@ -44,30 +44,28 @@ jobs:
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
           rm public/base/css/dummy.css
-          touch public/base/css/other.css
-          touch public/base/test.css
+          rm public/base/css/other.css
+          rm public/base/test.css
 
       # This step will evaluate the repo status and report the changes
       - name: Get changed files in the public folder
         id: changes
-        uses: tj-actions/changed-files@v34
-#        with:
-#          files: public/**
+        uses: tj-actions/verify-changed-files@v12
+        with:
+          files: public/**
+          separator: "\r\n"
 
       - name: Run step if any file(s) in the public folder changed
-#        if: steps.changes.outputs.all_changed_and_modified_files != ''
+        if: steps.changes.outputs.files_changed == 'true'
         run: |
-          echo "${{ steps.changes.outputs }}"
-          for file in ${{ steps.changes.outputs.all_changed_and_modified_files }}; do
-            echo "$file was changed"
-          done
+          echo "Changed files:\r\n  ${{ steps.changes.outputs.changed_files }}"
 
       - name: Zip artifact for deployment
-        if: steps.changes.outputs.all_changed_and_modified_files != ''
+        if: steps.changes.outputs.files_changed == 'true'
         run: zip release.zip -r .
 
       - uses: actions/upload-artifact@v3
-        if: steps.changes.outputs.all_changed_and_modified_files != ''
+        if: steps.changes.outputs.files_changed == 'true'
         with:
           name: build
           path: release.zip
@@ -76,7 +74,7 @@ jobs:
     name: Quality checks
     runs-on: ['ubuntu-latest']
     needs: build
-    if: needs.build.outputs.all_changed_and_modified_files != ''
+    if: needs.build.outputs.files_changed == 'true'
 
     steps:
       - uses: actions/download-artifact@v3
