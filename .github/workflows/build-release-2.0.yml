@@ -43,7 +43,7 @@ jobs:
         run: |
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
-          touch -f public/base/css/other.css
+          rm -f public/base/css/other.css
 
       # This step will evaluate the repo status and report the changes
       - name: Get changed files in the public folder
