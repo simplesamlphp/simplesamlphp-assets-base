@@ -18,7 +18,7 @@ jobs:
         id: glob
         with:
           files: |
-            public/base/**/*
+            public/**/*
 
       - name: Show all matching files
         run: |
@@ -27,6 +27,7 @@ jobs:
       - name:  Remove file
         run: |
           rm -rf public/base/css/other.css
+          touch public/base/css/something.css
 
       # This step will evaluate the repo status and report the changes
       - name: Get changed files in the public folder
@@ -34,8 +35,8 @@ jobs:
         uses: tj-actions/verify-changed-files@v12
         with:
           files: |
-            public/base/**/*
-          separator: "\r\n"
+            public/**/*
+          # separator: "\r\n"
 
       - name: Run step if any file(s) in the public folder changed
         # if: steps.changes.outputs.files_changed == 'true'
