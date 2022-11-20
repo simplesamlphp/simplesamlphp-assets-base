@@ -43,7 +43,7 @@ jobs:
         run: |
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
-          touch public/base/css/other.css
+          rm -f public/base/css/other.css
 
       # This step will evaluate the repo status and report the changes
       - name: Get changed files in the public folder
@@ -54,7 +54,7 @@ jobs:
           separator: "\r\n"
 
       - name: Run step if any file(s) in the public folder changed
-        if: steps.changes.outputs.files_changed == 'true'
+        # if: steps.changes.outputs.files_changed == 'true'
         run: |
           printf "Changed files: ${{ steps.changes.outputs.changed_files }}"
 
