@@ -50,7 +50,7 @@ jobs:
         id: changes
         uses: tj-actions/verify-changed-files@v12
         with:
-          files: public/**
+          files: public/**/*
           separator: "\r\n"
 
       - name: Run step if any file(s) in the public folder changed
