@@ -17,7 +17,7 @@ jobs:
     name: Build assets
     runs-on: ['ubuntu-latest']
     outputs:
-      any_modified: ${{ steps.changes.outputs.any_modified }}
+      all_changed_and_modified_files: ${{ steps.changes.outputs.all_changed_and_modified_files }}
 
     steps:
       - uses: actions/setup-node@v3
@@ -51,22 +51,23 @@ jobs:
       - name: Get changed files in the public folder
         id: changes
         uses: tj-actions/changed-files@v34
-#        with:
-#          files: public/**
+        with:
+          files: public/**
 
       - name: Run step if any file(s) in the public folder changed
-        if: steps.changes.outputs.any_modified == 'true'
+        if: steps.changes.outputs.all_changed_and_modified_files != ''
         run: |
-          for file in ${{ steps.changes.outputs.all_changed_files }}; do
+          echo "${{ steps.changes.outputs }}"
+          for file in ${{ steps.changes.outputs.all_changed_and_modified_files }}; do
             echo "$file was changed"
           done
 
       - name: Zip artifact for deployment
-        if: steps.changes.outputs.any_modified == 'true'
+        if: steps.changes.outputs.all_changed_and_modified_files != ''
         run: zip release.zip -r .
 
       - uses: actions/upload-artifact@v3
-        if: steps.changes.outputs.any_modified == 'true'
+        if: steps.changes.outputs.all_changed_and_modified_files != ''
         with:
           name: build
           path: release.zip
@@ -75,7 +76,7 @@ jobs:
     name: Quality checks
     runs-on: ['ubuntu-latest']
     needs: build
-    if: needs.build.outputs.any_modified == 'true'
+    if: needs.build.outputs.all_changed_and_modified_files != ''
 
     steps:
       - uses: actions/download-artifact@v3
