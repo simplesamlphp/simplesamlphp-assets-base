@@ -51,11 +51,11 @@ jobs:
       - name: Get changed files in the public folder
         id: changes
         uses: tj-actions/changed-files@v34
-        with:
-          files: public/**
+#        with:
+#          files: public/**
 
       - name: Run step if any file(s) in the public folder changed
-        if: steps.changes.outputs.all_changed_and_modified_files != ''
+#        if: steps.changes.outputs.all_changed_and_modified_files != ''
         run: |
           echo "${{ steps.changes.outputs }}"
           for file in ${{ steps.changes.outputs.all_changed_and_modified_files }}; do
