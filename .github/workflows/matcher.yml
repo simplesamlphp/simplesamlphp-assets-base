@@ -26,7 +26,7 @@ jobs:
 
       - name:  Remove file
         run: |
-          rm -rf public/base/css/other.css
+          rm public/base/css/other.css
           touch public/base/css/something.css
 
       # This step will evaluate the repo status and report the changes
