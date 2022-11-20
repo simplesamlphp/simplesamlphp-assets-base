@@ -43,8 +43,7 @@ jobs:
         run: |
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
-          rm -f public/base/css/other.css
-          touch public/base/css/dummy.css
+          touch public/base/css/other.css
 
       # This step will evaluate the repo status and report the changes
       - name: Get changed files in the public folder
@@ -57,7 +56,7 @@ jobs:
       - name: Run step if any file(s) in the public folder changed
         if: steps.changes.outputs.files_changed == 'true'
         run: |
-          echo "Changed files:\r\n  ${{ steps.changes.outputs.changed_files }}"
+          printf "Changed files: ${{ steps.changes.outputs.changed_files }}"
 
       - name: Zip artifact for deployment
         if: steps.changes.outputs.files_changed == 'true'
