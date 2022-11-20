@@ -43,6 +43,9 @@ jobs:
         run: |
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
+
+      - name: Throw away an existing file
+          ls -lha public/base/css/other.css
           rm -f public/base/css/other.css
 
       # This step will evaluate the repo status and report the changes
