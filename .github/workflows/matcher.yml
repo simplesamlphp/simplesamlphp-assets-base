@@ -1,0 +1,25 @@
+---
+name: Match files
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: ['release-2.0']
+
+jobs:
+  build:
+    name: Match files
+    runs-on: ['ubuntu-latest']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Glob match
+        uses: tj-actions/glob@v16
+        id: glob
+        with:
+          files: |
+            public/**
+
+      - name: Show all matching files
+        run: |
+          echo "${{ steps.glob.outputs.paths }}"
