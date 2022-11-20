@@ -51,8 +51,7 @@ jobs:
       - name: Run step if any file(s) in the public folder changed
         if: steps.changes.outputs.changes == failure()
         run: |
-          echo "There are uncommitted changes:"
-          git status
+          echo "There are uncommitted changes."
 
       - name: Zip artifact for deployment
         if: steps.changes.outputs.changes == failure()
