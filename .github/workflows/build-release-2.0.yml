@@ -43,6 +43,7 @@ jobs:
         run: |
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
+          touch public/base/css/dummy.css
 
       # This step will evaluate the repo status and report the changes
       - name: Check if there are changes
