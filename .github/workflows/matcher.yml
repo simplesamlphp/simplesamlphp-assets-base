@@ -13,6 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name:  Remove file
+        run: |
+          rm -rf public/css/other.css
+
       - name: Glob match
         uses: tj-actions/glob@v16
         id: glob
