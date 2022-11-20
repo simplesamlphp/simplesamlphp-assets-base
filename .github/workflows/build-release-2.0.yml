@@ -39,9 +39,10 @@ jobs:
           npx browserslist@latest --update-db
           npm run build
 
-      - name: Suppress fatal error in next step
+      - name: Fix git safe.directory in container
         run: |
-          sudo git config --system --add safe.directory '*'
+          mkdir -p /home/runner/work/_temp/_github_home
+          echo "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
 
       - name: Check for uncommitted changes
         id: changes
