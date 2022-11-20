@@ -45,6 +45,7 @@ jobs:
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
 
       - name: Throw away an existing file
+        run: |
           ls -lha public/base/css/other.css
           rm -f public/base/css/other.css
 
