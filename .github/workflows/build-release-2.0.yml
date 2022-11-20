@@ -42,7 +42,7 @@ jobs:
       - name: Fix git safe.directory in container
         run: |
           mkdir -p /home/runner/work/_temp/_github_home
-          echo "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
+          printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
 
       - name: Check for uncommitted changes
         id: changes
