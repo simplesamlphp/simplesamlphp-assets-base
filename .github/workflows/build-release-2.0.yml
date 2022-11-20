@@ -43,14 +43,14 @@ jobs:
         run: |
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
-          rm -f public/base/css/other.css
+          touch -f public/base/css/other.css
 
       # This step will evaluate the repo status and report the changes
       - name: Get changed files in the public folder
         id: changes
         uses: tj-actions/verify-changed-files@v12
         with:
-          files: public/**/*
+          files: public/**
           separator: "\r\n"
 
       - name: Run step if any file(s) in the public folder changed
