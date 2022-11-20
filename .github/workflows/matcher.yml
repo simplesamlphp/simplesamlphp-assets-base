@@ -15,7 +15,7 @@ jobs:
 
       - name:  Remove file
         run: |
-          rm -rf public/css/other.css
+          rm -rf public/base/css/other.css
 
       - name: Glob match
         uses: tj-actions/glob@v16
