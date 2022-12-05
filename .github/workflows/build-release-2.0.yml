@@ -57,20 +57,8 @@ jobs:
           echo $SourceDiff
 
           $HasDiff = $SourceDiff.Length -gt 0
-          echo "($HasDiff changes)"
-          echo "files_changed=$HasDiff" >> $GITHUB_OUTPUT
-      # This step will evaluate the repo status and report the changes
-      #- name: Get changed files in the public folder
-      #  id: changes
-      #  uses: tj-actions/verify-changed-files@v12
-      #  with:
-      #    files: public/**/*
-      #    separator: "\r\n"
-
-      #- name: Run step if any file(s) in the public folder changed
-      # if: steps.changes.outputs.files_changed == 'true'
-      #  run: |
-      #    printf "Changed files: ${{ steps.changes.outputs.changed_files }}"
+          echo "($($SourceDiff.Length) changes)"
+          echo "files_changed=$HasDiff" >> $env:GITHUB_OUTPUT
 
       - name: Zip artifact for deployment
         if: steps.changes.outputs.files_changed == 'true'
