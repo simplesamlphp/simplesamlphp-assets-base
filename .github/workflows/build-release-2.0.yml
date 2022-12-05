@@ -44,12 +44,6 @@ jobs:
           mkdir -p /home/runner/work/_temp/_github_home
           printf "[safe]\n\tdirectory = /github/workspace" > /home/runner/work/_temp/_github_home/.gitconfig
 
-      - name: Throw away an existing file
-        run: |
-          ls -lha public/base/css/other.css
-          rm -f public/base/css/other.css
-          ls -lha public/base/css/
-
       - shell: pwsh
         # Give an id to the step, so we can reference it later
         id: changes
