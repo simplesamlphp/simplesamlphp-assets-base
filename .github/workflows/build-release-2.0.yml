@@ -49,15 +49,15 @@ jobs:
         id: changes
         run: |
           # Diff HEAD with the previous commit
-          $diff = git diff --name-only HEAD^ HEAD
+          $Diff = git diff --name-only
 
           # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-          $SourceDiff = $diff | Where-Object { $_ -match '^public/' -or $_ -match '^package-lock.json$' }
-          $HasDiff = $SourceDiff.Length -gt 0
-
-          echo "Changed files:"
+          $SourceDiff = $Diff | Where-Object { $_ -match '^public/' -or $_ -match '^package-lock.json$' }
+          echo "Changed files"
           echo $SourceDiff
 
+          $HasDiff = $SourceDiff.Length -gt 0
+          echo "($HasDiff changes)"
           echo "files_changed=$HasDiff" >> $GITHUB_OUTPUT
       # This step will evaluate the repo status and report the changes
       #- name: Get changed files in the public folder
