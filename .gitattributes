@@ -4,3 +4,6 @@ package-lock.json export-ignore
 /public/base/.gitkeep export-ignore
 /resources export-ignore
 /tools export-ignore
+LICENSE export-ignore
+README.md export-ignore
+webpack.config.js export-ignore
