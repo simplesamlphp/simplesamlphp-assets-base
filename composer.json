@@ -1,5 +1,5 @@
 {
-    "name": "simplesamlphp/simplesamlphp-assets",
+    "name": "simplesamlphp/simplesamlphp-assets-base",
     "description": "Assets for the SimpleSAMLphp main repository",
     "type": "simplesamlphp-module",
     "license": "LGPL-2.1-or-later",
@@ -21,7 +21,9 @@
             ".gitignore",
             "package.json",
             "package-lock.json",
-            "public/base/.gitkeep",
+            "css/.gitkeep",
+            "fonts/.gitkeep",
+            "js/.gitkeep",
             "resources",
             "tools",
             "README.md",

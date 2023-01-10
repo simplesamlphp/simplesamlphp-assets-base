@@ -1,3 +1,5 @@
-!/public/.gitkeep
+!/css/.gitkeep
+!/fonts/.gitkeep
+!/js/.gitkeep
 /node_modules/
 /vendor/
