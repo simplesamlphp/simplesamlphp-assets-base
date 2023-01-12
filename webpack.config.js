@@ -77,6 +77,14 @@ module.exports = environment => {
                         to: 'fonts/[name][ext]'
                     }
                 ]
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: path.resolve(__dirname + '/resources/icons'),
+                        to: 'icons/[name][ext]'
+                    }
+                ]
             })
         ]
     }
