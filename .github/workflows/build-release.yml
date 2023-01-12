@@ -15,9 +15,16 @@ jobs:
         with:
           token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
           ref: release-2.0
-          # Full git history is needed to get a proper
-          # list of changed files within `super-linter`
+          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
+
+      - name: Fetch changes
+        # Without fetching, we might miss new tags due to caching in Github Actions
+        run: git fetch --all
+
+      - name: Remove generated files
+        # Remove generated files; we can't lint them and we want to detect removed files during build
+        run: find css/ fonts/ icons/ js/ -type f -not -name '.gitkeep' -delete
 
       - name: Lint Code Base
         uses: github/super-linter/slim@v4
@@ -91,7 +98,7 @@ jobs:
           $SourceDiff = $Diff | Where-Object {
               $_ -match '^css/' -or
               $_ -match '^fonts/' -or
-              $_ -match 'îcons/' -or
+              $_ -match '^icons/' -or
               $_ -match '^js/'
           }
           echo "Changed files"
