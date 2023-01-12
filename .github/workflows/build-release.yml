@@ -45,7 +45,6 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          git fetch --all
           zip release.zip -r .
 
       - uses: actions/upload-artifact@v3
