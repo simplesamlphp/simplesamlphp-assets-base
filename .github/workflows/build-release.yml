@@ -52,6 +52,7 @@ jobs:
         with:
           name: release
           path: release.zip
+          retention-days: 1
 
   build:
     name: Build assets
@@ -117,6 +118,7 @@ jobs:
         with:
           name: build
           path: build.zip
+          retention-days: 1
 
   version:
     name: Determine next version
