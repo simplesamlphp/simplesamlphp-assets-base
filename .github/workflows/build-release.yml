@@ -82,7 +82,7 @@ jobs:
           npx browserslist@latest --update-db
           npm run build
           # Remove artifact from build-process that should not be published
-          rm js/stylesheet.js.*
+          rm js/stylesheet.js js/stylesheet.js.map
 
       - name: Fix git safe.directory in container
         run: |
