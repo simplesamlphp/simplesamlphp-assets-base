@@ -23,6 +23,7 @@
             "package-lock.json",
             "css/.gitkeep",
             "fonts/.gitkeep",
+            "icons/.gitkeep",
             "js/.gitkeep",
             "resources",
             "tools",
