@@ -182,7 +182,7 @@ jobs:
 
           # The message for the commit.
           # Default: 'Commit from GitHub Actions (name of the workflow)'
-          message: "Auto-rebuild assets\n\nskip-checks: true"
+          message: "[skip ci] Auto-rebuild assets"
 
           # The way the action should handle pathspec errors from the add and remove commands.
           # Three options are available:
