@@ -97,7 +97,8 @@ jobs:
           DEFAULT_BRANCH: release-2.0
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # CSS Linter will choke on generated assets
-          FILTER_REGEX_EXCLUDE: 'public/.*'
+          IGNORE_GENERATED_FILES: true
+          FILTER_REGEX_EXCLUDE: '(css|js|fonts|icons)/.*'
 
   version:
     name: Determine next version
@@ -135,7 +136,7 @@ jobs:
 
           # Optional path to check for changes. If any changes are detected in the path the
           # 'changed' output will true. Enter multiple paths separated by spaces.
-          change_path: "resources/** public/base/** package.json package-lock.json"
+          change_path: "css/** js/** fonts/** icons/** package.json package-lock.json"
 
           # If this is set to true, *every* commit will be treated as a new version.
           bump_each_commit: false
