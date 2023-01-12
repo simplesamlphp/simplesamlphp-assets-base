@@ -3,7 +3,9 @@ name: Build assets for SimpleSAMLphp 2.0
 
 on:  # yamllint disable-line rule:truthy
   push:
-    branches: ['release-2.0']
+    branches: ['release-*']
+  pull_request:
+    branches: ['*']
 
 jobs:
   quality:
@@ -14,7 +16,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
-          ref: release-2.0
+          ref: ${{ github.head_ref || github.ref_name }}
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
@@ -37,7 +39,7 @@ jobs:
           VALIDATE_MARKDOWN: true
           VALIDATE_YAML: true
           VALIDATE_GITHUB_ACTIONS: true
-          DEFAULT_BRANCH: release-2.0
+          DEFAULT_BRANCH: ${{ github.head_ref || github.ref_name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # CSS Linter will choke on generated assets
           IGNORE_GENERATED_FILES: true
@@ -56,7 +58,9 @@ jobs:
   build:
     name: Build assets
     runs-on: ['ubuntu-latest']
+    if: github.event_name == 'push'
     needs: quality
+
     outputs:
       files_changed: ${{ steps.changes.outputs.files_changed }}
 
