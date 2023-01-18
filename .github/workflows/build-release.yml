@@ -6,6 +6,7 @@ on:  # yamllint disable-line rule:truthy
     branches: ['release-*']
   pull_request:
     branches: ['*']
+  workflow_dispatch:
 
 jobs:
   quality:
