@@ -3,12 +3,17 @@
 ready(function () {
     // Language selector
     var languageSelector = document.getElementById("language-selector");
+
+    // Page without language bar
+    if (languageSelector === null) {
+        return;
+    }
+
     languageSelector.onchange = function () {
         var languageForm = document.getElementById("language-form");
         languageForm.submit();
         return true;
     };
-
 
     // Side menu
     var menuLink = document.getElementById("menuLink");
