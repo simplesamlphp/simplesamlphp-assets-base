@@ -20,7 +20,7 @@ module.exports = environment => {
             bundle: './resources/js/bundle/main',
             logout: './resources/js/logout/main',
             post: './resources/js/post/main',
-            stylesheet: './resources/js/style'
+            stylesheet: './resources/js/style',
             postSubmit: './resources/js/post'
         },
         output: {
