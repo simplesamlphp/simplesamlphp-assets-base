@@ -21,6 +21,7 @@ module.exports = environment => {
             logout: './resources/js/logout/main',
             post: './resources/js/post/main',
             stylesheet: './resources/js/style'
+            postSubmit: './resources/js/post'
         },
         output: {
             path: path.resolve(buildDir),
