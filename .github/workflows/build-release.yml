@@ -112,16 +112,16 @@ jobs:
           echo "Changed files"
           echo $SourceDiff
 
-          $HasDiff = $SourceDiff.Length -gt 0
+          $HasSourceDiff = $SourceDiff.Length -gt 0
           echo "($($SourceDiff.Length) changes)"
-          echo "files_changed=$HasDiff" >> $env:GITHUB_OUTPUT
+          echo "files_changed=$HasSourceDiff" >> $env:GITHUB_OUTPUT
 
       - name: Zip artifact for deployment
-        if: steps.changes.outputs.files_changed == 'true'
+        if: steps.changes.outputs.files_changed == 'true' || steps.changes.outputs.packages_changed
         run: zip build.zip -r .
 
       - uses: actions/upload-artifact@v3
-        if: steps.changes.outputs.files_changed == 'true'
+        if: steps.changes.outputs.files_changed == 'true' || steps.changes.outputs.packages_changed
         with:
           name: build
           path: build.zip
@@ -169,8 +169,8 @@ jobs:
           # If this is set to true, *every* commit will be treated as a new version.
           bump_each_commit: true
 
-  commit:
-    name: Commit changes
+  commit-assets:
+    name: Commit changes to assets
     needs: version
     runs-on: [ubuntu-latest]
 
@@ -189,7 +189,7 @@ jobs:
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
-          add: "['resources/*', 'css/*', 'fonts/*', 'icons/*', 'js/*', 'package.json', 'package-lock.json']"
+          add: "['resources/*', 'css/*', 'fonts/*', 'icons/*', 'js/*']"
 
           # Determines the way the action fills missing author name and email. Three options are available:
           # - github_actor -> UserName <UserName@users.noreply.github.com>

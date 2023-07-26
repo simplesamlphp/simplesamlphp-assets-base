@@ -1,0 +1,81 @@
+---
+name: Update tools for SimpleSAMLphp 2.0
+
+on:  # yamllint disable-line rule:truthy
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build assets
+    runs-on: ['ubuntu-latest']
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+
+    outputs:
+      packages_changed: ${{ steps.changes.outputs.packages_changed }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
+          ref: ${{ github.head_ref || github.ref_name }}
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      - name: Fetch changes
+        # Without fetching, we might miss new tags due to caching in Github Actions
+        run: git fetch --all
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install & build assets
+        run: |
+          npm clean-install
+          npm audit fix
+
+      - name: Diff the changes after building
+        shell: pwsh
+        # Give an id to the step, so we can reference it later
+        id: changes
+        run: |
+          git add --all
+          $Diff = git diff --cached --name-only
+
+          # Check if the lock-file has changed
+          $PackageDiff = $Diff | Where-Object {
+              $_ -match '^package-lock.json'
+          }
+
+          echo "Changed files"
+          echo $PackageDiff
+
+          $HasPackageDiff = $PackageDiff.Length -gt 0
+          echo "($($PackageDiff.Length) changes)"
+          echo "packages_changed=$HasPackageDiff" >> $env:GITHUB_OUTPUT
+
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v9.1.1
+        if: ${{ steps.changes.outputs.packages_changed }}
+        with:
+          # The arguments for the `git add` command (see the paragraph below for more info)
+          # Default: '.'
+          add: "['package-lock.json']"
+
+          # Determines the way the action fills missing author name and email. Three options are available:
+          # - github_actor -> UserName <UserName@users.noreply.github.com>
+          # - user_info -> Your Display Name <your-actual@email.com>
+          # - github_actions -> github-actions <email associated with the github logo>
+          # Default: github_actor
+          default_author: github_actions
+
+          # The message for the commit.
+          # Default: 'Commit from GitHub Actions (name of the workflow)'
+          message: "[skip ci] Auto-update developer-tools"
+
+          # The way the action should handle pathspec errors from the add and remove commands.
+          # Three options are available:
+          # - ignore -> errors will be logged but the step won't fail
+          # - exitImmediately -> the action will stop right away, and the step will fail
+          # - exitAtEnd -> the action will go on, every pathspec error will be logged at the end, the step will fail.
+          # Default: ignore
+          pathspec_error_handling: exitImmediately
