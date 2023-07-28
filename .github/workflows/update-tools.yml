@@ -1,12 +1,12 @@
 ---
-name: Update tools for SimpleSAMLphp 2.0
+name: Update tools for SimpleSAMLphp 2.1
 
 on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build assets
+    name: Update tools
     runs-on: ['ubuntu-latest']
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
