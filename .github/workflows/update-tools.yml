@@ -30,6 +30,9 @@ jobs:
 
       - name: Install & build assets
         run: |
+          npx npm-check-updates -u
+          # Make sure the lock-file is up to date before we run clean-install
+          npm install --package-lock-only
           npm clean-install
           npm audit fix
 
