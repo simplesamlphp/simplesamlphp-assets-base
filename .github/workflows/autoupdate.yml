@@ -1,6 +1,6 @@
 ---
 
-name: 'Update of assets'
+name: 'Update dependencies'
 
 on:
   workflow_dispatch:
@@ -10,11 +10,11 @@ on:
 
 jobs:
   build:
-    name: 'Build assets'
+    name: 'Update dependencies'
     runs-on: [ubuntu-latest]
 
     steps:
-      - name: 'Run assets build (2.0)'
+      - name: 'Run developer-tools update (2.0)'
         uses: actions/github-script@v6
         with:
           # Token has to be generated on a user account that controls the remote repository.
@@ -24,11 +24,11 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: 'simplesamlphp',
               repo: 'simplesamlphp-assets-base',
-              workflow_id: 'build-release.yml',
+              workflow_id: 'update-dependencies.yml',
               ref: 'release-2.0'
             })
 
-      - name: 'Run assets build (2.1)'
+      - name: 'Run developer-tools update (2.1)'
         uses: actions/github-script@v6
         with:
           # Token has to be generated on a user account that controls the remote repository.
@@ -38,6 +38,6 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: 'simplesamlphp',
               repo: 'simplesamlphp-assets-base',
-              workflow_id: 'build-release.yml',
+              workflow_id: 'update-dependencies.yml',
               ref: 'release-2.1'
             })
