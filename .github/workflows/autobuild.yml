@@ -12,6 +12,9 @@ jobs:
   build:
     name: Build assets
     runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        branch: ['release-2.0', 'release-2.1']
 
     steps:
       - name: Run developer-tools update
@@ -25,7 +28,7 @@ jobs:
               owner: 'simplesamlphp',
               repo: 'simplesamlphp-assets-base',
               workflow_id: 'update-tools.yml',
-              ref: 'release-2.0'
+              ref: '${{ matrix.branch }}'
             })
 
       - name: Run assets build
@@ -39,5 +42,5 @@ jobs:
               owner: 'simplesamlphp',
               repo: 'simplesamlphp-assets-base',
               workflow_id: 'build-release.yml',
-              ref: 'release-2.0'
+              ref: '${{ matrix.branch }}'
             })
