@@ -168,7 +168,7 @@ jobs:
           # If this is set to true, *every* commit will be treated as a new version.
           bump_each_commit: true
 
-  commit-assets:
+  commit:
     name: Commit changes to assets
     needs: version
     runs-on: [ubuntu-latest]
@@ -212,3 +212,17 @@ jobs:
           # Arguments for the git tag command (the tag name always needs to be the first word not preceded by an hyphen)
           # Default: ''
           tag: "v${{ needs.version.outputs.version }}"
+
+  cleanup:
+    name: Cleanup artifacts
+    needs: [build, commit]
+    runs-on: [ubuntu-latest]
+    if: |
+      always() &&
+      needs.commit.result == 'success' ||
+      (needs.build.result == 'success' && needs.commit.result == 'skipped')
+
+    steps:
+      - uses: geekyeggo/delete-artifact@v2
+        with:
+          name: release
