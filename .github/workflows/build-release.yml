@@ -80,6 +80,8 @@ jobs:
 
       - name: Install & build assets
         run: |
+          # Make sure the lock-file is up to date before we run clean-install
+          npm install --package-lock-only
           npm clean-install
           npm audit fix
           npx browserslist@latest --update-db
