@@ -47,7 +47,10 @@ module.exports = environment => {
                         {
                             loader: 'css-loader',
                             options: {
-                                url: false
+                                url: false,
+                                modules: {
+                                    mode: "icss",
+                                }
                             }
                         },
                         {
