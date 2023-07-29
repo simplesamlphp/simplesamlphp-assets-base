@@ -222,4 +222,6 @@ jobs:
     steps:
       - uses: geekyeggo/delete-artifact@v2
         with:
-          name: release
+          name: |
+            release
+            build
