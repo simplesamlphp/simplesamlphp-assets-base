@@ -1,5 +1,6 @@
 'use strict';
 
+import * as poly from "@babel/polyfill/dist/polyfill";
 import hljs from  "highlight.js/lib/core";
 import xml from "highlight.js/lib/languages/xml";
 import php from "highlight.js/lib/languages/php";
