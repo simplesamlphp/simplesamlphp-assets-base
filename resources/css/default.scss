@@ -335,9 +335,10 @@ HEADER
 }
 
 .language-menu {
-  font-family: "Font Awesome 5 Free", sans-serif;
+  font-family: sans-serif;
   font-weight: 400;
   min-width: 10rem;
+  padding: 0em 0.6em !important;
 }
 
 .language-bar {
@@ -654,7 +655,7 @@ input#postLoginSubmitButton {
  * IMAGES
  ************************************************************/
 .fa {
-  font-family: "Font Awesome 5 Free", sans-serif !important;
+  font-family: "Font Awesome 6 Free", sans-serif !important;
   font-weight: 400;
 }
 
@@ -802,7 +803,7 @@ div.preferredidp {
 
     &::after {
       content: "\f078";
-      font-family: "Font Awesome 5 Free", sans-serif;
+      font-family: "Font Awesome 6 Free", sans-serif;
       font-weight: 400;
     }
   }
