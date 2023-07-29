@@ -1,14 +1,12 @@
 ---
 name: Update dependencies for SimpleSAMLphp 2.0
 
-on:  # yamllint disable-line rule:truthy
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   build:
     name: Update tools
     runs-on: ['ubuntu-latest']
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     outputs:
       packages_changed: ${{ steps.changes.outputs.packages_changed }}
