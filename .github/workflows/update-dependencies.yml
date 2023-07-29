@@ -1,8 +1,7 @@
 ---
 name: Update dependencies for SimpleSAMLphp 2.1
 
-on:  # yamllint disable-line rule:truthy
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   build:
