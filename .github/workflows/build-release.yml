@@ -69,7 +69,7 @@ jobs:
         with:
           node-version: 18
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: release
 
@@ -141,7 +141,7 @@ jobs:
       version: ${{ steps.asset_version.outputs.version }}
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: build
 
@@ -176,7 +176,7 @@ jobs:
     runs-on: [ubuntu-latest]
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: build
 
