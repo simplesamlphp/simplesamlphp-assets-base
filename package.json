@@ -30,13 +30,13 @@
     "@babel/preset-env": "^7.23.9",
     "babel-loader": "^8.2.5",
     "copy-webpack-plugin": "^9.1.0",
-    "css-loader": "^6.9.1",
+    "css-loader": "^6.10.0",
     "expose-loader": "^2.0.0",
-    "mini-css-extract-plugin": "^2.7.7",
+    "mini-css-extract-plugin": "^2.8.0",
     "sass": "^1.70.0",
     "sass-loader": "^13.3.3",
     "style-loader": "^2.0.0",
-    "webpack": "^5.90.0",
+    "webpack": "^5.90.1",
     "webpack-cli": "^4.10.0"
   },
   "browserslist": "last 2 versions, ie 11, > 1%"
