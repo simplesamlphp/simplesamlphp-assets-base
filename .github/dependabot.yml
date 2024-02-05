@@ -33,7 +33,7 @@ updates:
       all-actions:
         patterns: ["*"]
 
-  - package-ecosystem: "compposer"  # See documentation for possible values
+  - package-ecosystem: "composer"  # See documentation for possible values
     target-branch: release-2.0
     directory: "/"  # Location of package manifests
     schedule:
@@ -57,7 +57,7 @@ updates:
           - "minor"
           - "patch"
 
-  - package-ecosystem: "compposer"  # See documentation for possible values
+  - package-ecosystem: "composer"  # See documentation for possible values
     target-branch: release-2.1
     directory: "/"  # Location of package manifests
     schedule:
