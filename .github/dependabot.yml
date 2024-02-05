@@ -45,31 +45,7 @@ updates:
           - "minor"
           - "patch"
 
-  - package-ecosystem: "npm"  # See documentation for possible values
-    target-branch: release-2.0
-    directory: "/"  # Location of package manifests
-    schedule:
-      interval: "daily"
-    groups:
-      dev-dependencies:
-        dependency-type: "development"
-        update-types:
-          - "minor"
-          - "patch"
-
   - package-ecosystem: "composer"  # See documentation for possible values
-    target-branch: release-2.1
-    directory: "/"  # Location of package manifests
-    schedule:
-      interval: "daily"
-    groups:
-      dev-dependencies:
-        dependency-type: "development"
-        update-types:
-          - "minor"
-          - "patch"
-
-  - package-ecosystem: "npm"  # See documentation for possible values
     target-branch: release-2.1
     directory: "/"  # Location of package manifests
     schedule:
