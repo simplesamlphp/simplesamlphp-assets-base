@@ -512,6 +512,10 @@ input[type="file"] {
   margin-top: 3ex;
 }
 
+input#username:disabled {
+  color: #000000;
+}
+
 .v-center-right {
   position: absolute;
   left: 0;
