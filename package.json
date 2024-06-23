@@ -33,10 +33,10 @@
     "css-loader": "^6.10.0",
     "expose-loader": "^2.0.0",
     "mini-css-extract-plugin": "^2.9.0",
-    "sass": "^1.77.5",
+    "sass": "^1.77.6",
     "sass-loader": "^14.2.1",
     "style-loader": "^2.0.0",
-    "webpack": "^5.92.0",
+    "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4"
   },
   "browserslist": "last 2 versions, ie 11, > 1%"
