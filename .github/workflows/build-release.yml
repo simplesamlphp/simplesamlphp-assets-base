@@ -31,7 +31,7 @@ jobs:
         run: find css/ fonts/ icons/ js/ -type f -not -name '.gitkeep' -delete
 
       - name: Lint Code Base
-        uses: super-linter/super-linter/slim@v6
+        uses: super-linter/super-linter/slim@v7
         env:
           DEFAULT_BRANCH: ${{ github.head_ref || github.ref_name }}
           # CSS Linter will choke on generated assets
