@@ -38,6 +38,7 @@ jobs:
           IGNORE_GENERATED_FILES: true
           FILTER_REGEX_EXCLUDE: '(css|js|fonts|icons)/.*'
           # To report GitHub Actions status checks
+          SAVE_SUPER_LINTER_OUTPUT: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: 'tools/linters'
           VALIDATE_ALL_CODEBASE: true
