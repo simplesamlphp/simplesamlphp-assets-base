@@ -30,7 +30,7 @@ jobs:
         run: find css/ fonts/ icons/ js/ -type f -not -name '.gitkeep' -delete
 
       - name: Lint Code Base
-        uses: super-linter/super-linter/slim@v6
+        uses: super-linter/super-linter/slim@v7
         env:
           VALIDATE_ALL_CODEBASE: true
           LINTER_RULES_PATH: 'tools/linters'
