@@ -12,6 +12,7 @@ jobs:
   quality:
     name: Quality checks
     runs-on: ['ubuntu-latest']
+    if: ${{ github.event.commits[0].author.name != 'dependabot[bot]' }}
 
     steps:
       - uses: actions/checkout@v4
