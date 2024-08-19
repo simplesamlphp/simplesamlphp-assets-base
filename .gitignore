@@ -1,6 +1,6 @@
 !/css/.gitkeep
 !/fonts/.gitkeep
 !/js/.gitkeep
-super-linter.log
+/super-linter-output/
 /node_modules/
 /vendor/
