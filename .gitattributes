@@ -12,5 +12,6 @@ package-lock.json export-ignore
 /resources export-ignore
 /tools export-ignore
 LICENSE export-ignore
+ncurc.js export-ignore
 README.md export-ignore
 webpack.config.js export-ignore
