@@ -1,7 +1,7 @@
 {
-  "name": "simplesamlphp-assets",
+  "name": "simplesamlphp-assets-base",
   "main": "index.js",
-  "repository": "https://github.com/simplesamlphp/simplesamlphp",
+  "repository": "https://github.com/simplesamlphp/simplesamlphp-assets-base",
   "author": "tvdijen",
   "license": "LGPL-2.1-or-later",
   "engines": {
