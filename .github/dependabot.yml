@@ -8,15 +8,6 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"  # See documentation for possible values
-    target-branch: release-2.0
-    directory: "/"  # Location of package manifests
-    schedule:
-      interval: "weekly"
-    groups:
-      all-actions:
-        patterns: ["*"]
-
-  - package-ecosystem: "github-actions"  # See documentation for possible values
     target-branch: release-2.1
     directory: "/"  # Location of package manifests
     schedule:
@@ -35,6 +26,7 @@ updates:
         patterns: ["*"]
 
   - package-ecosystem: "github-actions"  # See documentation for possible values
+    target-branch: release-2.3
     directory: "/"  # Location of package manifests
     schedule:
       interval: "weekly"
@@ -42,19 +34,13 @@ updates:
       all-actions:
         patterns: ["*"]
 
-  - package-ecosystem: "composer"  # See documentation for possible values
-    target-branch: release-2.0
+  - package-ecosystem: "github-actions"  # See documentation for possible values
     directory: "/"  # Location of package manifests
     schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
+      interval: "weekly"
     groups:
-      production-dependencies:
-        dependency-type: "production"
-      dev-dependencies:
-        dependency-type: "development"
+      all-actions:
+        patterns: ["*"]
 
   - package-ecosystem: "composer"  # See documentation for possible values
     target-branch: release-2.1
@@ -64,11 +50,6 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-    groups:
-      production-dependencies:
-        dependency-type: "production"
-      dev-dependencies:
-        dependency-type: "development"
 
   - package-ecosystem: "composer"  # See documentation for possible values
     target-branch: release-2.2
@@ -78,8 +59,12 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-    groups:
-      production-dependencies:
-        dependency-type: "production"
-      dev-dependencies:
-        dependency-type: "development"
+
+  - package-ecosystem: "composer"  # See documentation for possible values
+    target-branch: release-2.3
+    directory: "/"  # Location of package manifests
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
