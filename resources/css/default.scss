@@ -403,6 +403,7 @@ CONTENT
 .code-box-content {
   word-break: break-all;
   font-size: 1em;
+  font-family: monospace;
   line-height: 1.10;
   padding: 0.5em 1em;
   display: block;
@@ -410,11 +411,14 @@ CONTENT
   width: 100%;
   height: 100%;
   white-space: pre-wrap;
-  font-family: monospace;
 
   &::selection {
     color: black;
     background: $light-yellow;
+  }
+
+  pre {
+    white-space: pre-wrap;
   }
 }
 
