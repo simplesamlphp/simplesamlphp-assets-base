@@ -87,7 +87,7 @@ jobs:
           npm install --package-lock-only
           npm clean-install
           npm audit fix
-          npx browserslist@latest --update-db
+          npx update-browserslist-db@latest
           npm run build
           # Remove artifact from build-process that should not be published
           rm js/stylesheet.js js/stylesheet.js.map
