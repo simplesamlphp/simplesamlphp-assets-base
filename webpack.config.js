@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -12,9 +11,9 @@ const localConfig = {
 
 module.exports = environment => {
     const env = typeof environment !== 'undefined' ? environment : {};
-    const primaryBackground = env.hasOwnProperty('primaryBackground') ? env.primaryBackground : '#b8002c';
-    const transitionBackground = env.hasOwnProperty('transitionBackground') ? env.transitionBackground : '#db0100';
-    const secondaryBackground = env.hasOwnProperty('secondaryBackground') ? env.secondaryBackground : '#e8410c';
+    const primaryBackground = Object.prototype.hasOwnProperty.call(env, 'primaryBackground') ? env.primaryBackground : '#b8002c';
+    const transitionBackground = Object.prototype.hasOwnProperty.call(env, 'transitionBackground') ? env.transitionBackground : '#db0100';
+    const secondaryBackground = Object.prototype.hasOwnProperty.call(env, 'secondaryBackground') ? env.secondaryBackground : '#e8410c';
     return {
         entry: {
             bundle: './resources/js/bundle/main',
@@ -77,7 +76,7 @@ module.exports = environment => {
             new CopyWebpackPlugin({
                 patterns: [
                     {
-                        from: path.resolve(__dirname + '/node_modules/\@fortawesome/fontawesome-free/webfonts/fa-solid*'),
+                        from: path.resolve(__dirname + '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid*'),
                         to: 'fonts/[name][ext]'
                     }
                 ]

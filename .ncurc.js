@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: ["error", { "args": "none" }] */
+
 module.exports = {
   /** Filter out non-major version updates.
     @param {string} packageName               The name of the dependency.
