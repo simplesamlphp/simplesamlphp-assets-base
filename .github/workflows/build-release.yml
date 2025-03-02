@@ -28,7 +28,7 @@ jobs:
 
       - name: Remove generated files
         # Remove generated files; we can't lint them and we want to detect removed files during build
-        run: find css/ fonts/ icons/ js/ -type f -not -name '.gitkeep' -delete
+        run: find css/ webfonts/ icons/ js/ -type f -not -name '.gitkeep' -delete
 
       - name: Lint Code Base
         uses: super-linter/super-linter/slim@v7
@@ -36,7 +36,7 @@ jobs:
           DEFAULT_BRANCH: ${{ github.head_ref || github.ref_name }}
           # CSS Linter will choke on generated assets
           IGNORE_GENERATED_FILES: true
-          FILTER_REGEX_EXCLUDE: '(css|js|fonts|icons)/.*'
+          FILTER_REGEX_EXCLUDE: '(css|js|webfonts|icons)/.*'
           # To report GitHub Actions status checks
           SAVE_SUPER_LINTER_OUTPUT: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -106,10 +106,10 @@ jobs:
           git add --all
           $Diff = git diff --cached --name-only
 
-          # Check if a file under css/ js/ icons/ or fonts/ that has changed (added, modified, deleted)
+          # Check if a file under css/ js/ icons/ or webfonts/ that has changed (added, modified, deleted)
           $SourceDiff = $Diff | Where-Object {
               $_ -match '^css/' -or
-              $_ -match '^fonts/' -or
+              $_ -match '^webfonts/' -or
               $_ -match '^icons/' -or
               $_ -match '^js/'
           }
@@ -171,7 +171,7 @@ jobs:
 
           # Optional path to check for changes. If any changes are detected in the path the
           # 'changed' output will true. Enter multiple paths separated by spaces.
-          change_path: "css/** js/** fonts/** icons/** package.json package-lock.json"
+          change_path: "css/** js/** webfonts/** icons/** package.json package-lock.json"
 
   commit:
     name: Commit changes to assets
@@ -193,7 +193,7 @@ jobs:
         with:
           # The arguments for the `git add` command (see the paragraph below for more info)
           # Default: '.'
-          add: "['resources/*', 'css/*', 'fonts/*', 'icons/*', 'js/*']"
+          add: "['resources/*', 'css/*', 'webfonts/*', 'icons/*', 'js/*']"
 
           # Determines the way the action fills missing author name and email. Three options are available:
           # - github_actor -> UserName <UserName@users.noreply.github.com>
