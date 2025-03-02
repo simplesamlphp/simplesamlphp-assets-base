@@ -1,8 +1,9 @@
 @use "sass:meta";
 @import "../../node_modules/reset-css/reset.css";
 @import "../../node_modules/purecss/build/pure.css";
-@include meta.load-css("../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome", $with: ("fa-font-path": "../fonts"));
-@include meta.load-css("../../node_modules/@fortawesome/fontawesome-free/scss/solid", $with: ("fa-font-path": "../fonts"));
+$fa-font-path: "../fonts";
+@include meta.load-css("../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome");
+@include meta.load-css("../../node_modules/@fortawesome/fontawesome-free/scss/solid");
 @import "../../node_modules/highlight.js/styles/base16/zenburn.css";
 
 /*************
