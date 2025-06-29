@@ -21,7 +21,7 @@
     "reset-css": "^5.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.4",
+    "@babel/core": "^7.27.7",
     "@babel/helper-compilation-targets": "^7.27.2",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.27.2",
