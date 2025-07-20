@@ -33,7 +33,7 @@
     "sass": "^1.89.2",
     "sass-loader": "^14.2.1",
     "style-loader": "^3.3.4",
-    "webpack": "^5.100.1",
+    "webpack": "^5.100.2",
     "webpack-cli": "^5.1.4"
   },
   "browserslist": "last 2 versions, ie 11, > 1%"
