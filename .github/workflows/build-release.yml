@@ -31,7 +31,7 @@ jobs:
         run: find css/ fonts/ icons/ js/ -type f -not -name '.gitkeep' -delete
 
       - name: Lint Code Base
-        uses: super-linter/super-linter/slim@v7
+        uses: super-linter/super-linter/slim@v8
         env:
           DEFAULT_BRANCH: ${{ github.head_ref || github.ref_name }}
           # CSS Linter will choke on generated assets
@@ -72,7 +72,7 @@ jobs:
         with:
           node-version: 18
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: release
 
@@ -144,7 +144,7 @@ jobs:
       version: ${{ steps.asset_version.outputs.version }}
 
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: build
 
@@ -179,7 +179,7 @@ jobs:
     runs-on: [ubuntu-latest]
 
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: build
 
