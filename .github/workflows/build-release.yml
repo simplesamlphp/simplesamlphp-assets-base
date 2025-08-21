@@ -1,5 +1,5 @@
 ---
-name: Build assets for SimpleSAMLphp 2.4
+name: Build assets for SimpleSAMLphp 2.5
 
 on:  # yamllint disable-line rule:truthy
   push:
@@ -10,12 +10,33 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
   quality:
-    name: Quality checks
-    runs-on: ['ubuntu-latest']
+    name: 'Lint Code Base'
     if: ${{ github.event.commits[0].author.name != 'dependabot[bot]' }}
 
+    strategy:
+      fail-fast: false
+
+    uses: simplesamlphp/simplesamlphp-test-framework/.github/workflows/reusable_linter.yml@v1.10.0
+    with:
+      enable_eslinter: true
+      enable_jsonlinter: true
+      enable_stylelinter: false
+      enable_yamllinter: true
+
+  build:
+    name: Build assets
+    runs-on: ['ubuntu-latest']
+    needs: quality
+
+    outputs:
+      files_changed: ${{ steps.changes.outputs.files_changed }}
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
           ref: ${{ github.head_ref || github.ref_name }}
@@ -29,57 +50,6 @@ jobs:
       - name: Remove generated files
         # Remove generated files; we can't lint them and we want to detect removed files during build
         run: find css/ webfonts/ icons/ js/ -type f -not -name '.gitkeep' -delete
-
-      - name: Lint Code Base
-        uses: super-linter/super-linter/slim@v8
-        env:
-          DEFAULT_BRANCH: ${{ github.head_ref || github.ref_name }}
-          # CSS Linter will choke on generated assets
-          IGNORE_GENERATED_FILES: true
-          FILTER_REGEX_EXCLUDE: '(css|js|webfonts|icons)/.*'
-          # To report GitHub Actions status checks
-          SAVE_SUPER_LINTER_OUTPUT: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: 'tools/linters'
-          VALIDATE_ALL_CODEBASE: true
-          VALIDATE_CSS: true
-          VALIDATE_JAVASCRIPT_ES: true
-          VALIDATE_JSON: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_YAML: true
-          VALIDATE_GITHUB_ACTIONS: true
-
-      - name: Zip artifact for deployment
-        run: |
-          zip release.zip -r .
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: release
-          path: release.zip
-          retention-days: 1
-
-  build:
-    name: Build assets
-    runs-on: ['ubuntu-latest']
-    needs: quality
-
-    outputs:
-      files_changed: ${{ steps.changes.outputs.files_changed }}
-
-    steps:
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - uses: actions/download-artifact@v5
-        with:
-          name: release
-
-      - name: unzip artifact for deployment
-        run: |
-          unzip release.zip
-          rm release.zip
 
       - name: Install & build assets
         run: |
