@@ -1,6 +1,6 @@
 'use strict';
 
-import ClipboardJS from "clipboard/dist/clipboard";
+import * as ClipboardJS from "clipboard/dist/clipboard";
 
 ready(function () {
     // Clipboard

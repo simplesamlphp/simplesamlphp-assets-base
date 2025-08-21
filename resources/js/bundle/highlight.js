@@ -1,10 +1,10 @@
 'use strict';
 
 import "core-js";
-import hljs from  "highlight.js/lib/core";
-import xml from "highlight.js/lib/languages/xml";
-import php from "highlight.js/lib/languages/php";
-import json from "highlight.js/lib/languages/json";
+import * as hljs from  "highlight.js/lib/core";
+import * as xml from "highlight.js/lib/languages/xml";
+import * as php from "highlight.js/lib/languages/php";
+import * as json from "highlight.js/lib/languages/json";
 
 ready(function () {
     // Syntax highlight
