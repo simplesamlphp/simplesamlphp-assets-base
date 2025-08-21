@@ -3,13 +3,21 @@ const { defineConfig } = require("eslint/config");
 
 module.exports = defineConfig([
     {
-        ignores: ["!/tools/linters/.eslint.config.js", "!/tools/linters/.stylelintrc.json"],
+        ignores: [
+            "!/tools/linters/eslint.config.js",
+            "!/tools/linters/.stylelintrc.json",
+            "!/.ncurc.js",
+            "!/js/**",
+            "!/css/**",
+            "!/webfonts/**",
+            "!/icons/**"
+        ],
         languageOptions: {
             ecmaVersion: 2015,
             sourceType: "module"
         },
         files: [
-            "**/*.js",
+            "resources/**.js",
         ],
         rules: {
             semi: "error",
