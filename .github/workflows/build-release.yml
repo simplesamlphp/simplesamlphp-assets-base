@@ -20,7 +20,7 @@ jobs:
     with:
       enable_eslinter: true
       enable_jsonlinter: true
-      enable_stylelinter: false
+      enable_stylelinter: true
       enable_yamllinter: true
 
   build:
