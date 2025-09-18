@@ -863,3 +863,82 @@ div.preferredidp {
 .left {
   float: left;
 }
+/*Margins*/
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { margin-top: .25rem !important; }
+.mt-2 { margin-top: .5rem !important; }
+.mt-3 { margin-top: 1rem !important; }
+.mt-4 { margin-top: 1.5rem !important; }
+.mt-5 { margin-top: 3rem !important; }
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: .25rem !important; }
+.mb-2 { margin-bottom: .5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+.mb-5 { margin-bottom: 3rem !important; }
+/*Padding*/
+.p-0  { padding: 0 !important; }
+.p-1  { padding: .25rem !important; }
+.p-2  { padding: .5rem !important; }
+.p-3  { padding: 1rem !important; }
+.p-4  { padding: 1.5rem !important; }
+.p-5  { padding: 3rem !important; }
+
+.px-3 { padding-left: 1rem !important; padding-right: 1rem !important; }
+.py-3 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+
+/*Loader*/
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin: 15px auto;
+  background: #FFF;
+  box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+  box-sizing: border-box;
+  animation: shadowPulse 2s linear infinite;
+  z-index: 10000;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;           /* square width */
+  height: 120px;          /* square height (same as width) */
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.04);  /* subtle halo for contrast */
+  border-radius: 12px;    /* rounded corners */
+  pointer-events: none;
+  z-index: -1;            /* behind the loader dots */
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12); /* faint inner edge for visibility */
+}
+
+@media (forced-colors: active) {
+  .loader::before {
+    background: Canvas;
+    border: 2px solid ButtonText;
+    box-shadow: none;
+  }
+}
+
+@keyframes shadowPulse {
+  33% {
+    background: #FFF;
+    box-shadow: -24px 0 #db0100, 24px 0 #FFF;
+  }
+  66% {
+    background: #db0100;
+    box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+  }
+  100% {
+    background: #FFF;
+    box-shadow: -24px 0 #FFF, 24px 0 #db0100;
+  }
+}
