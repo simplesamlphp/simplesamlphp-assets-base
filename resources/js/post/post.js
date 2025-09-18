@@ -26,7 +26,7 @@ ready(function () {
     // the SSO
     const btn = document.getElementById('postLoginSubmitButton');
     if (btn) {
-        // Defer the click so the scheduling above is committed
+        // Schedule the click on the next event loop turn so pending UI updates can render first
         setTimeout(function () { btn.click(); }, 0);
     }
 });
