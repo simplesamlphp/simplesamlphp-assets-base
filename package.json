@@ -21,9 +21,9 @@
     "reset-css": "^5.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.4",
+    "@babel/core": "^7.28.5",
     "@babel/helper-compilation-targets": "^7.27.2",
-    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-env": "^7.28.5",
     "babel-loader": "^9.2.1",
     "copy-webpack-plugin": "^12.0.2",
     "core-js": "^2.6.12",
@@ -31,7 +31,7 @@
     "expose-loader": "^5.0.1",
     "mini-css-extract-plugin": "^2.9.4",
     "sass-embedded": "^1.93.2",
-    "sass-loader": "^16.0.5",
+    "sass-loader": "^16.0.6",
     "style-loader": "^3.3.4",
     "webpack": "^5.102.1",
     "webpack-cli": "^5.1.4"
