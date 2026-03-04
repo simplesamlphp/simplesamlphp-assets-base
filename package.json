@@ -5,7 +5,7 @@
   "author": "tvdijen",
   "license": "LGPL-2.1-or-later",
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.9.0",
     "npm": ">=8.0.0"
   },
   "scripts": {
@@ -26,14 +26,14 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.29.0",
     "babel-loader": "^9.2.1",
-    "copy-webpack-plugin": "^12.0.2",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.10.0",
     "expose-loader": "^5.0.1",
     "mini-css-extract-plugin": "^2.10.0",
     "sass": "^1.97.3",
     "sass-loader": "^14.2.1",
     "style-loader": "^3.3.4",
-    "webpack": "^5.105.2",
+    "webpack": "^5.105.4",
     "webpack-cli": "^5.1.4"
   },
   "browserslist": "last 2 versions, ie 11, > 1%"
