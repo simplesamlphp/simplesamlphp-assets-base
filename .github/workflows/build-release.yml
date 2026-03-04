@@ -15,7 +15,7 @@ jobs:
     if: ${{ github.event.commits[0].author.name != 'dependabot[bot]' }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
           ref: ${{ github.head_ref || github.ref_name }}
@@ -124,7 +124,7 @@ jobs:
         if: steps.changes.outputs.files_changed == 'true' || steps.changes.outputs.packages_changed
         run: zip build.zip -r .
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: steps.changes.outputs.files_changed == 'true' || steps.changes.outputs.packages_changed
         with:
           name: build
