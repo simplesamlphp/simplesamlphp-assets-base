@@ -29,7 +29,7 @@
     "core-js": "^2.6.12",
     "css-loader": "^6.10.0",
     "expose-loader": "^5.0.1",
-    "mini-css-extract-plugin": "^2.10.1",
+    "mini-css-extract-plugin": "^2.10.2",
     "sass-embedded": "^1.98.0",
     "sass-loader": "^16.0.7",
     "style-loader": "^3.3.4",
