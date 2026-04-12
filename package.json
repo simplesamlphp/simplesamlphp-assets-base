@@ -33,7 +33,7 @@
     "sass-embedded": "^1.99.0",
     "sass-loader": "^16.0.7",
     "style-loader": "^4.0.0",
-    "webpack": "^5.105.4",
+    "webpack": "^5.106.1",
     "webpack-cli": "^6.0.1"
   },
   "browserslist": "last 2 versions, ie 11, > 1%"
