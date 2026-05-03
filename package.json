@@ -24,7 +24,7 @@
     "@babel/core": "^7.29.0",
     "@babel/helper-compilation-targets": "^7.28.6",
     "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-env": "^7.29.3",
     "babel-loader": "^9.2.1",
     "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.10.0",
