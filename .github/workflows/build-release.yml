@@ -116,13 +116,20 @@ jobs:
       version: ${{ steps.asset_version.outputs.version }}
 
     steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
+          ref: ${{ github.head_ref || github.ref_name }}
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
       - uses: actions/download-artifact@v8
         with:
           name: build
 
       - name: unzip artifact for deployment
         run: |
-          unzip build.zip
+          unzip -f build.zip
           rm build.zip
 
       - uses: paulhatch/semantic-version@v6.0.3
@@ -151,13 +158,20 @@ jobs:
     runs-on: [ubuntu-latest]
 
     steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.ASSETS_COMMIT_TOKEN }}
+          ref: ${{ github.head_ref || github.ref_name }}
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
       - uses: actions/download-artifact@v8
         with:
           name: build
 
       - name: unzip artifact for deployment
         run: |
-          unzip build.zip
+          unzip -f build.zip
           rm build.zip
 
       - name: Add & Commit
