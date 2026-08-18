@@ -12,6 +12,30 @@ $fa-font-path: "../webfonts";
 
 $light-yellow: #fffdbf;
 
+// Theming overrides using CSS custom properties. Note that all uses of var() are preceeded by a static fallback color.
+// Fallbacks could be removed if we don't care about older browsers such as IE11 and out-of-date embedded webviews.
+:root {
+  /* Default red color scheme */
+  --ssp-chrome-primary-background: #{$primaryBackground};
+  --ssp-chrome-transition-background: #{$transitionBackground};
+  --ssp-chrome-secondary-background: #{$secondaryBackground};
+  --ssp-chrome-text: #{$chromeText};
+  --ssp-chrome-text-shadow: #{$chromeTextShadow};
+
+  /* small screen menu colors */
+  --ssp-chrome-menu: var(--ssp-chrome-secondary-background, #e8410c);
+  --ssp-chrome-menu-divider: var(--ssp-chrome-transition-background, #db0100);
+  --ssp-chrome-menu-active: var(--ssp-chrome-primary-background, #b8002c);
+  --ssp-chrome-menu-text: var(--ssp-chrome-text, #fff);
+
+  /* Loader dots color */
+  --ssp-chrome-loader: var(--ssp-chrome-transition-background, #db0100);
+
+  /* primary button colors */
+  --ssp-primary-button: var(--ssp-chrome-transition-background, #db0100);
+  --ssp-primary-button-text: var(--ssp-chrome-text, #fff);
+}
+
 /************************************************************
  * GENERAL
  ************************************************************/
@@ -180,6 +204,7 @@ appears on the left side of the page.
   bottom: 0;
   z-index: 1000; /* so the menu or its navicon stays above all content */
   background: $secondaryBackground;
+  background: var(--ssp-chrome-menu);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -188,7 +213,8 @@ appears on the left side of the page.
 All anchors inside the menu should be styled like this.
 */
 #menu a {
-  color: #fff;
+  color: $chromeText;
+  color: var(--ssp-chrome-menu-text);
   border: none;
   padding: 0.6em 0 0.6em 0.6em;
 }
@@ -208,6 +234,7 @@ Add that light border to separate items into groups.
 #menu .pure-menu ul,
 #menu .pure-menu .menu-item-divided {
   border-top: 1px solid $transitionBackground;
+  border-top: 1px solid var(--ssp-chrome-menu-divider);
 }
 
 /*
@@ -216,14 +243,16 @@ This styles the selected menu item `<li>`.
 #menu .pure-menu-selected,
 #menu .pure-menu-heading {
   background: $primaryBackground;
-  color: black;
+  background: var(--ssp-chrome-menu-active);
+  color: var(--ssp-chrome-menu-active-text, black);
 }
 
 /*
 This styles a link within a selected menu item `<li>`.
 */
 #menu .pure-menu-selected a {
-  color: #fff;
+  color: $chromeText;
+  color: var(--ssp-chrome-menu-text);
 }
 
 /*
@@ -231,7 +260,8 @@ This styles the menu heading.
 */
 #menu .pure-menu-heading {
   font-size: 110%;
-  color: #fff;
+  color: $chromeText;
+  color: var(--ssp-chrome-menu-text);
   margin: 0;
   text-transform: none;
 }
@@ -268,7 +298,8 @@ small screens.
 .menu-link span {
   position: relative;
   display: block;
-  color: #fff;
+  color: $chromeText;
+  color: var(--ssp-chrome-menu-link, var(--ssp-chrome-menu-text));
 }
 
 .menu-link span,
@@ -280,6 +311,7 @@ small screens.
 .menu-link span:focus,
 .menu-link span:hover {
   color: #010101cc;
+  color: var(--ssp-chrome-menu-link-active, #010101cc);
 }
 
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
@@ -308,6 +340,7 @@ HEADER
 #header {
   height: 6rem;
   background: linear-gradient(141deg, $primaryBackground 0%, $transitionBackground 51%, $secondaryBackground 75%);
+  background: linear-gradient(141deg, var(--ssp-chrome-primary-background) 0%, var(--ssp-chrome-transition-background) 51%, var(--ssp-chrome-secondary-background) 75%);
 }
 
 .logo-header {
@@ -319,8 +352,10 @@ HEADER
 #logo {
   font-family: sans-serif;
   font-size: 2.5em;
-  color: white;
-  text-shadow: 0 3px 2px #532900;
+  color: $chromeText;
+  color: var(--ssp-chrome-text);
+  text-shadow: 0 3px 2px $chromeTextShadow;
+  text-shadow: 0 3px 2px var(--ssp-chrome-text-shadow);
 }
 
 .simple {
@@ -443,14 +478,17 @@ pre#xmlmetadata {
 #footer {
   width: 100%;
   background: linear-gradient(141deg, $primaryBackground 0%, $transitionBackground 51%, $secondaryBackground 75%);
+  background: linear-gradient(141deg, var(--ssp-chrome-primary-background) 0%, var(--ssp-chrome-transition-background) 51%, var(--ssp-chrome-secondary-background) 75%);
   height: 4rem;
   padding: 2rem 0 0;
   text-align: center;
-  color: white;
+  color: $chromeText;
+  color: var(--ssp-chrome-text);
 
   a,
   a:visited {
-    color: white;
+    color: $chromeText;
+    color: var(--ssp-chrome-text);
 
     &:focus,
     &:hover {
@@ -579,12 +617,15 @@ html[dir="rtl"] .pure-select {
 }
 
 .pure-button-red {
-  background-color: #db0100;
-  color: #fff;
+  background-color: $transitionBackground;
+  background-color: var(--ssp-primary-button);
+  color: $chromeText;
+  color: var(--ssp-primary-button-text);
 
   &:hover,
   &:focus {
     background-color: #555;
+    background-color: var(--ssp-primary-button-active, #555);
     padding: 0.5em 1em;
   }
 }
@@ -931,14 +972,17 @@ div.preferredidp {
 @keyframes shadowPulse {
   33% {
     background: #FFF;
-    box-shadow: -24px 0 #db0100, 24px 0 #FFF;
+    box-shadow: -24px 0 $transitionBackground, 24px 0 #FFF;
+    box-shadow: -24px 0 var(--ssp-chrome-loader), 24px 0 #FFF;
   }
   66% {
-    background: #db0100;
+    background: $transitionBackground;
+    background: var(--ssp-chrome-loader);
     box-shadow: -24px 0 #FFF, 24px 0 #FFF;
   }
   100% {
     background: #FFF;
-    box-shadow: -24px 0 #FFF, 24px 0 #db0100;
+    box-shadow: -24px 0 #FFF, 24px 0 $transitionBackground;
+    box-shadow: -24px 0 #FFF, 24px 0 var(--ssp-chrome-loader);
   }
 }
