@@ -14,6 +14,8 @@ module.exports = environment => {
     const primaryBackground = Object.prototype.hasOwnProperty.call(env, 'primaryBackground') ? env.primaryBackground : '#b8002c';
     const transitionBackground = Object.prototype.hasOwnProperty.call(env, 'transitionBackground') ? env.transitionBackground : '#db0100';
     const secondaryBackground = Object.prototype.hasOwnProperty.call(env, 'secondaryBackground') ? env.secondaryBackground : '#e8410c';
+    const chromeText = Object.prototype.hasOwnProperty.call(env, 'chromeText') ? env.chromeText : '#fff';
+    const chromeTextShadow = Object.prototype.hasOwnProperty.call(env, 'chromeTextShadow') ? env.chromeTextShadow : '#532900';
     return {
         entry: {
             bundle: './resources/js/bundle/main',
@@ -60,7 +62,9 @@ module.exports = environment => {
                                 },
                                 additionalData: "$primaryBackground: " + primaryBackground + '; ' +
                                       "$transitionBackground: " + transitionBackground + "; " +
-                                      "$secondaryBackground: " + secondaryBackground + ";"
+                                      "$secondaryBackground: " + secondaryBackground + "; " +
+                                      "$chromeText: " + chromeText + "; " +
+                                      "$chromeTextShadow: " + chromeTextShadow + ";"
                             }
                         }
                     ]
